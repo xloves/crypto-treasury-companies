@@ -26,9 +26,9 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/YOUR_USERNAME/crypto-treasury-companies.git"
+    "url": "https://github.com/dnshi/crypto-treasury-companies.git"
   },
-  "homepage": "https://YOUR_USERNAME.github.io/crypto-treasury-companies",
+  "homepage": "https://dnshi.github.io/crypto-treasury-companies",
   "dependencies": {},
   "devDependencies": {},
   "engines": {

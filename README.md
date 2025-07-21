@@ -1,7 +1,7 @@
 # 🚀 Crypto Treasury Companies Monitor
 
-[![Deploy Status](https://github.com/YOUR_USERNAME/crypto-treasury-companies/workflows/Deploy%20Crypto%20Treasury%20Website/badge.svg)](https://github.com/YOUR_USERNAME/crypto-treasury-companies/actions)
-[![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Live-brightgreen)](https://YOUR_USERNAME.github.io/crypto-treasury-companies)
+[![Deploy Status](https://github.com/dnshi/crypto-treasury-companies/workflows/Deploy%20Crypto%20Treasury%20Website/badge.svg)](https://github.com/dnshi/crypto-treasury-companies/actions)
+[![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Live-brightgreen)](https://dnshi.github.io/crypto-treasury-companies)
 
 一个现代化的网站，实时监控囤币公司的市值、持仓和MNAV溢价倍率。具有炫酷的宇宙极光背景，类似Binance和欧艺的专业交易平台风格。
 
@@ -35,7 +35,7 @@
 
 ### 1. 克隆项目
 ```bash
-git clone https://github.com/YOUR_USERNAME/crypto-treasury-companies.git
+git clone https://github.com/dnshi/crypto-treasury-companies.git
 cd crypto-treasury-companies
 ```
 
@@ -69,9 +69,9 @@ npm run preview:simple
 ```json
 {
   "repository": {
-    "url": "https://github.com/YOUR_USERNAME/crypto-treasury-companies.git"
+    "url": "https://github.com/dnshi/crypto-treasury-companies.git"
   },
-  "homepage": "https://YOUR_USERNAME.github.io/crypto-treasury-companies"
+  "homepage": "https://dnshi.github.io/crypto-treasury-companies"
 }
 ```
 
