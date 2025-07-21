@@ -38,10 +38,68 @@ git push -u origin main
 
 ### 步骤3: 配置GitHub Pages
 
+#### 基本配置
 1. 在仓库页面点击 `Settings`
 2. 左侧菜单找到 `Pages`
-3. 在 "Source" 部分选择 `GitHub Actions`
+3. 在 "Source" 部分选择 `GitHub Actions` ⚠️ **重要：不要选择 "Deploy from a branch"**
 4. 点击 `Save`
+
+#### 首次部署启动
+配置完成后需要手动触发首次部署：
+
+**方法1: GitHub网站手动触发（推荐）**
+1. 进入仓库的 `Actions` 标签页
+2. 左侧找到 `Deploy Crypto Treasury Website` 工作流
+3. 点击右侧的 `Run workflow` 下拉按钮
+4. 点击绿色的 `Run workflow` 按钮
+5. 等待部署完成（通常2-3分钟）
+
+**方法2: 通过代码更改触发**
+```bash
+# 对任意文件做小修改并推送
+echo "# Trigger deployment" >> README.md
+git add README.md
+git commit -m "Trigger initial GitHub Pages deployment"
+git push
+```
+
+#### 常见问题解决
+
+**❌ 错误: "Get Pages site failed. Please verify that the repository has Pages enabled"**
+
+解决步骤：
+1. **检查仓库可见性**
+   - 仓库必须是 `Public`（免费GitHub账户要求）
+   - 仓库名下方不应有 🔒 图标
+
+2. **确认Actions权限**
+   - `Settings` → `Actions` → `General`
+   - 选择 "Allow all actions and reusable workflows"
+
+3. **验证Pages配置**
+   - `Settings` → `Pages` → Source 必须是 `GitHub Actions`
+   - 不能是 "Deploy from a branch"
+
+4. **检查工作流权限**
+   - 确认 `.github/workflows/deploy.yml` 中包含：
+   ```yaml
+   permissions:
+     contents: read
+     pages: write
+     id-token: write
+   ```
+
+**❌ 错误: "HttpError: Not Found"**
+
+这通常表示Pages还未完全激活，解决方法：
+1. 等待5-10分钟后重试
+2. 手动触发一次GitHub Actions工作流
+3. 检查仓库URL是否正确
+
+#### 部署状态监控
+- 📊 **监控地址**: `https://github.com/YOUR_USERNAME/crypto-treasury-companies/actions`
+- 🌐 **网站地址**: `https://YOUR_USERNAME.github.io/crypto-treasury-companies`
+- ⏰ **部署时间**: 通常2-3分钟完成
 
 ### 步骤4: 更新配置文件
 
@@ -75,11 +133,13 @@ npm run preview:simple
 - 📊 使用真实CSV数据
 - ⚡ 快速启动服务器
 
-### 步骤6: 触发首次部署
+### 步骤6: 启动部署
 
-1. 修改并保存任意文件（比如在README.md加个空格）
-2. 提交更改到GitHub
-3. 查看 Actions 页面，等待部署完成
+按照步骤3中的"首次部署启动"说明操作即可。部署完成后：
+
+1. 访问你的网站：`https://YOUR_USERNAME.github.io/crypto-treasury-companies`
+2. 在 `Actions` 页面确认部署成功（绿色勾号）
+3. 如遇问题，参考步骤3中的"常见问题解决"部分
 
 ## 📊 更新数据
 
@@ -127,6 +187,16 @@ A:
 2. 确保CSV文件格式正确
 3. 确认仓库是Public
 4. 重新推送代码触发部署
+
+### Q: 出现"Get Pages site failed"或"HttpError: Not Found"错误？
+A:
+这是GitHub Pages配置问题，解决方法：
+1. 确保 `Settings` → `Pages` → Source 选择的是 `GitHub Actions`
+2. 仓库必须是Public（免费账户要求）
+3. 在 `Settings` → `Actions` → `General` 中允许所有Actions
+4. 手动触发一次工作流：`Actions` → `Run workflow`
+5. 等待5-10分钟让Pages完全激活
+详细解决方案请参考步骤3中的"常见问题解决"部分。
 
 ### Q: 网站显示"正在加载数据"不变？
 A:
