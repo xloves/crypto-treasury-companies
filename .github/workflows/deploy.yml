@@ -1,0 +1,101 @@
+name: Deploy Crypto Treasury Website
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'db/MNAV.csv'
+      - 'index.html'
+      - 'script.js'
+      - '.github/workflows/deploy.yml'
+
+  # 允许手动触发工作流
+  workflow_dispatch:
+
+# 设置 GITHUB_TOKEN 的权限以允许部署到 GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 只允许一个并发部署，跳过正在运行和最新排队之间的运行队列
+# 但是，不要取消正在进行的运行，因为我们希望让这些生产部署完成
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  # 构建作业
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm ci --only=production
+
+      - name: Validate CSV data
+        run: |
+          echo "Validating MNAV.csv file..."
+          if [ ! -f "db/MNAV.csv" ]; then
+            echo "Error: MNAV.csv file not found!"
+            exit 1
+          fi
+
+          # 检查CSV文件是否有内容
+          if [ ! -s "db/MNAV.csv" ]; then
+            echo "Error: MNAV.csv file is empty!"
+            exit 1
+          fi
+
+          echo "CSV file validation passed!"
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Build site
+        run: |
+          echo "Building static site..."
+          # 创建构建目录
+          mkdir -p _site
+
+          # 复制所有必要文件到构建目录
+          cp index.html _site/
+          cp script.js _site/
+          cp -r db _site/
+
+          # 生成部署时间戳
+          echo "$(date)" > _site/build-time.txt
+
+          echo "Build completed successfully!"
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '_site'
+
+  # 部署作业
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+      - name: Deployment Summary
+        run: |
+          echo "🚀 Website deployed successfully!"
+          echo "📊 URL: ${{ steps.deployment.outputs.page_url }}"
+          echo "⏰ Deployed at: $(date)"
+          echo ""
+          echo "📈 Crypto Treasury Companies website is now live!"

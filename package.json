@@ -1,0 +1,37 @@
+{
+  "name": "crypto-treasury-companies",
+  "version": "1.0.0",
+  "description": "Real-time monitoring of crypto treasury companies market cap and MNAV premium",
+  "main": "index.html",
+  "scripts": {
+    "start": "node -e \"const http=require('http'),fs=require('fs'),path=require('path');const server=http.createServer((req,res)=>{const filePath=path.join(process.cwd(),req.url==='/'?'index.html':req.url);fs.readFile(filePath,(err,data)=>{if(err){res.writeHead(404);res.end('Not Found');return;}const ext=path.extname(filePath);const mimeTypes={'.html':'text/html','.js':'application/javascript','.css':'text/css','.csv':'text/csv'};res.writeHead(200,{'Content-Type':mimeTypes[ext]||'text/plain'});res.end(data);});});server.listen(8000,()=>console.log('🌟 Server running at http://localhost:8000'))\"",
+    "preview": "node scripts/preview.js",
+    "preview:simple": "echo 'Starting simple Node.js server at http://localhost:8080...' && node -e \"require('http').createServer((req,res)=>{const fs=require('fs'),path=require('path');const filePath=path.join(process.cwd(),req.url==='/'?'index.html':req.url);fs.readFile(filePath,(err,data)=>{if(err){res.writeHead(404);res.end('Not Found');return;}res.writeHead(200);res.end(data);});}).listen(8080,()=>console.log('Server running at http://localhost:8080'))\"",
+    "build": "echo 'Static site - no build required'",
+    "validate": "node -e \"console.log('Validating project structure...'); const fs=require('fs'); const files=['index.html','script.js','db/MNAV.csv']; const missing=files.filter(f=>!fs.existsSync(f)); if(missing.length){console.error('Missing:',missing);process.exit(1);}console.log('✅ All files found');\"",
+    "help": "echo 'Available commands:\\n  npm start - Start dev server on port 8000 (Node.js)\\n  npm run preview - Smart preview with auto-open browser\\n  npm run preview:simple - Simple Node.js server\\n  npm run validate - Check project structure'"
+  },
+  "keywords": [
+    "cryptocurrency",
+    "bitcoin",
+    "ethereum",
+    "treasury",
+    "companies",
+    "MNAV",
+    "market-cap",
+    "investing",
+    "real-time"
+  ],
+  "author": "Crypto Treasury Tracker",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/YOUR_USERNAME/crypto-treasury-companies.git"
+  },
+  "homepage": "https://YOUR_USERNAME.github.io/crypto-treasury-companies",
+  "dependencies": {},
+  "devDependencies": {},
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
